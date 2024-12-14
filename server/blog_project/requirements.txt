@@ -117,7 +117,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.3
 pycairo==1.16.2
 pycparser==2.22
-pycups==1.9.73
+# pycups==1.9.73
 pygments==2.18.0
 # PyGObject==3.36.0
 PyJWT==1.7.1
