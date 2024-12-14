@@ -2,6 +2,8 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 from .views import (
     RegisterView,
     LogoutView,
@@ -33,4 +35,6 @@ urlpatterns = [
     path('blogs/<int:blog_id>/comments/list/', CommentListView.as_view(), name='list_comments'),  # List comments for a blog
 
 ] 
+
+urlpatterns += staticfiles_urlpatterns()
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
