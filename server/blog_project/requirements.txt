@@ -145,7 +145,7 @@ soupsieve==2.6
 speedtest-cli==2.1.2
 sqlparse==0.5.2
 stack-data==0.6.3
-systemd-python==234
+# systemd-python==234
 terminado==0.18.1
 tinycss2==1.4.0
 tomli==2.1.0
