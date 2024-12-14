@@ -152,7 +152,7 @@ tomli==2.1.0
 tornado==6.4.1
 traitlets==5.14.3
 typing-extensions==4.12.2
-ubuntu-drivers-common==0.0.0
+# ubuntu-drivers-common==0.0.0
 ubuntu-pro-client==8001
 ufw==0.36
 unattended-upgrades==0.1
