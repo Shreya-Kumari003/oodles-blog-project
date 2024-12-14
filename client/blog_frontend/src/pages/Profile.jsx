@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaEdit, FaPlus,FaRegTrashAlt, FaUserEdit } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API from "../api";
+import { IoMdLogOut } from "react-icons/io";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -15,18 +16,19 @@ const Profile = () => {
     const fetchUserDetails = async () => {
       try {
         const userResponse = await API.get("user/");
+        console.log('User Response:', userResponse);
         setUser(userResponse.data);
-
+    
         const blogsResponse = await API.get("user/blogs/");
+        console.log('Blogs Response:', blogsResponse);
         setBlogs(blogsResponse.data);
       } catch (error) {
-        console.error("Failed to fetch user details or blogs", error);
+        console.error("Failed to fetch user details or blogs", error.response || error);
         toast.error("Failed to fetch user details. Please log in.");
       } finally {
-        setLoading(false); // Set loading to false after data fetching
+        setLoading(false);
       }
     };
-
     fetchUserDetails();
   }, []); // Empty dependency array ensures the effect runs only once
 
@@ -88,8 +90,6 @@ const Profile = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Profile
         </h1>
-        {/* User Details */}
-
         <div className="flex justify-center items-center">
           <div className="relative w-24 h-24 rounded-full overflow-hidden flex items-center justify-center text-5xl font-semibold text-white">
             <div className="absolute inset-0 animate-bg bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500"></div>
@@ -99,16 +99,20 @@ const Profile = () => {
           </div>
         </div>
 
+        {/* User Details */}
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <label className="text-lg text-gray-700 font-semibold">
               Username
+              <hr className="bg-black h-[2px] max-w-40"></hr>
             </label>
             <p className="text-lg text-gray-600">{user?.username}</p>
           </div>
+
           <div className="flex justify-between items-center">
             <label className="text-lg text-gray-700 font-semibold">
               Full Name
+              <hr className="bg-black h-[3px] max-w-40"></hr>
             </label>
             <p className="text-lg text-gray-600">
               {user?.first_name + " " + user?.last_name}
@@ -116,7 +120,8 @@ const Profile = () => {
           </div>
           <div className="flex justify-between items-center">
             <label className="text-lg text-gray-700 font-semibold">
-              Occupation
+              Job
+              <hr className="bg-black h-[2px] max-w-40"></hr>
             </label>
             <p className="text-lg text-gray-600">{user?.occupation}</p>
           </div>
@@ -125,14 +130,14 @@ const Profile = () => {
         <div className="mt-8 flex justify-between space-x-4">
           <button
             onClick={handleEditProfile}
-            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 w-full md:w-auto"
-          >
+            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 w-full md:w-auto flex items-center justify-center gap-2"
+          ><FaUserEdit className='h-5 w-5'/>
             Edit Profile
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 w-full md:w-auto"
-          >
+            className="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 w-full md:w-auto flex items-center justify-center gap-2"
+          ><IoMdLogOut className='h-5 w-5'/>
             Logout
           </button>
         </div>
@@ -157,7 +162,7 @@ const Profile = () => {
                   <Link to={`/blogs/${blog.id}`}>
                     <img
                       // src={`http://localhost:8000/api${blog.image}`}
-                      src ={blog.image}
+                      src={blog.image}
                       alt={blog.title}
                       className="w-24 h-15 object-cover rounded-md mr-4 mb-4 md:mb-0"
                     />
@@ -179,14 +184,14 @@ const Profile = () => {
                 <div className="flex space-x-4 mt-4 md:mt-0">
                   <button
                     onClick={() => handleEdit(blog.id)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                  >
+                    className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white px-4 py-2 rounded-md hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 min-w-[100px] flex items-center justify-center gap-2"
+                  > <FaEdit/>
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(blog.id)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                  >
+                    className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white px-4 py-2 rounded-md hover:from-red-600 hover:via-red-700 hover:to-red-800 min-w-[100px] flex items-center justify-center gap-2"
+                  ><FaRegTrashAlt/>
                     Delete
                   </button>
                 </div>
@@ -205,3 +210,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
